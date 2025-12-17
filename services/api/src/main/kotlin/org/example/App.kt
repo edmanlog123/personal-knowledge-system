@@ -2,16 +2,13 @@ package org.example
 
 import com.expediagroup.graphql.server.ktor.GraphQL
 import com.expediagroup.graphql.server.ktor.graphQLPostRoute
-import com.expediagroup.graphql.server.ktor.defaultGraphQLStatusPages // Add this
+import com.expediagroup.graphql.server.ktor.defaultGraphQLStatusPages
 import org.example.graphql.RootQuery
 
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.plugins.statuspages.* // Add this
-import io.ktor.serialization.jackson.*
-import io.ktor.server.response.*
+import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.routing.*
 
 fun main() {
@@ -24,12 +21,11 @@ fun main() {
 
 fun Application.module() {
 
-    install(ContentNegotiation) {
-        jackson()
+    install(StatusPages) {
+        defaultGraphQLStatusPages()
     }
 
     install(GraphQL) {
-        playground = true
         schema {
             packages = listOf("org.example.graphql")
             queries = listOf(RootQuery())
@@ -37,8 +33,6 @@ fun Application.module() {
     }
 
     routing {
-        get("/health") {
-            call.respond(mapOf("status" to "ok"))
-        }
+        graphQLPostRoute()
     }
 }
