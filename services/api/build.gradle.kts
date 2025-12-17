@@ -19,14 +19,25 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit Jupiter for testing.
-    testImplementation(libs.junit.jupiter)
+    // Kotlin
+    implementation(kotlin("stdlib"))
 
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    // Ktor server
+    implementation("io.ktor:ktor-server-core-jvm:2.3.7")
+    implementation("io.ktor:ktor-server-netty-jvm:2.3.7")
+    implementation("io.ktor:ktor-server-content-negotiation-jvm:2.3.7")
+    implementation("io.ktor:ktor-serialization-jackson-jvm:2.3.7")
+    implementation("io.ktor:ktor-server-status-pages-jvm:2.3.7")
 
-    // This dependency is used by the application.
-    implementation(libs.guava)
+    // Logging
+    implementation("ch.qos.logback:logback-classic:1.4.14")
+
+    // GraphQL
+    implementation("com.expediagroup:graphql-kotlin-ktor-server:8.2.1")
+
+    testImplementation(kotlin("test"))
 }
+
 
 // Apply a specific Java toolchain to ease working on different environments.
 java {
