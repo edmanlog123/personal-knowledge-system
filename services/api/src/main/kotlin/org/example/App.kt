@@ -3,6 +3,7 @@ package org.example
 import com.expediagroup.graphql.server.ktor.GraphQL
 import com.expediagroup.graphql.server.ktor.graphQLPostRoute
 import com.expediagroup.graphql.server.ktor.defaultGraphQLStatusPages
+import com.expediagroup.graphql.server.ktor.graphiQLRoute
 import org.example.graphql.RootQuery
 
 import io.ktor.server.application.*
@@ -34,5 +35,6 @@ fun Application.module() {
 
     routing {
         graphQLPostRoute()
+        graphiQLRoute()
     }
 }
