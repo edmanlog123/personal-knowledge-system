@@ -5,6 +5,8 @@ import com.expediagroup.graphql.server.ktor.graphQLPostRoute
 import com.expediagroup.graphql.server.ktor.defaultGraphQLStatusPages
 import com.expediagroup.graphql.server.ktor.graphiQLRoute
 import org.example.graphql.RootQuery
+import org.example.graphql.NoteMutation
+
 
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -28,8 +30,9 @@ fun Application.module() {
 
     install(GraphQL) {
         schema {
-            packages = listOf("org.example.graphql")
+            packages = listOf("org.example")
             queries = listOf(RootQuery())
+            mutations = listOf(NoteMutation())
         }
     }
 
