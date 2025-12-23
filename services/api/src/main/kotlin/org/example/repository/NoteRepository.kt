@@ -31,19 +31,37 @@ object NoteRepository {
             }
         }
 
-    fun search(query: String): List<Note> =
-        transaction {
-            NotesTable
-                .select {
-                    (NotesTable.title like "%$query%") or
-                    (NotesTable.content like "%$query%")
-                }
-                .map {
-                    Note(
-                        id = it[NotesTable.id],
-                        title = it[NotesTable.title],
-                        content = it[NotesTable.content]
-                    )
-                }
-        }
+    fun search(query: String): List<org.example.search.SearchResult> {
+    val tokens = org.example.search.Tokenizer.tokenize(query)
+
+    return transaction {
+        NotesTable
+            .selectAll()
+            .map {
+                Note(
+                    id = it[NotesTable.id],
+                    title = it[NotesTable.title],
+                    content = it[NotesTable.content]
+                )
+            }
+            .map { note ->
+                val (score, reason) =
+                    org.example.search.Scorer.scoreWithReason(note, tokens)
+
+                val snippet =
+                    org.example.search.SnippetExtractor.extract(note.content, tokens)
+
+                org.example.search.SearchResult(
+                    note = note,
+                    snippet = snippet,
+                    reason = reason,
+                    score = score
+                )
+            }
+            .filter { it.score > 0 }
+            .sortedByDescending { it.score }
+    }
+}
+
+
 }
