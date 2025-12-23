@@ -1,5 +1,6 @@
 package org.example
 
+import org.example.infrastructure.db.DatabaseFactory
 import com.expediagroup.graphql.server.ktor.GraphQL
 import com.expediagroup.graphql.server.ktor.graphQLPostRoute
 import com.expediagroup.graphql.server.ktor.defaultGraphQLStatusPages
@@ -23,6 +24,8 @@ fun main() {
 }
 
 fun Application.module() {
+    DatabaseFactory.init()
+
 
     install(StatusPages) {
         defaultGraphQLStatusPages()

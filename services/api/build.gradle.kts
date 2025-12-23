@@ -29,6 +29,12 @@ dependencies {
     implementation("io.ktor:ktor-serialization-jackson-jvm:2.3.7")
     implementation("io.ktor:ktor-server-status-pages-jvm:2.3.7")
 
+    implementation("org.jetbrains.exposed:exposed-core:0.45.0")
+    implementation("org.jetbrains.exposed:exposed-dao:0.45.0")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.45.0")
+    implementation("org.xerial:sqlite-jdbc:3.45.1.0")
+
+
     // Logging
     implementation("ch.qos.logback:logback-classic:1.4.14")
 

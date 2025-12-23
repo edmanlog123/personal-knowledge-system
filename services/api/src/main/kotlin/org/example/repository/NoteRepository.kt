@@ -1,28 +1,49 @@
 package org.example.repository
 
 import org.example.domain.Note
-import java.util.UUID
+import org.example.infrastructure.db.NotesTable
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.transactions.transaction
 
 object NoteRepository {
 
-    private val notes = mutableListOf<Note>()
+    fun add(title: String, content: String): Note =
+        transaction {
+            val id = java.util.UUID.randomUUID().toString()
 
-    fun add(title: String, content: String): Note {
-        val note = Note(
-            id = UUID.randomUUID().toString(),
-            title = title,
-            content = content
-        )
-        notes.add(note)
-        return note
-    }
+            NotesTable.insert {
+                it[NotesTable.id] = id
+                it[NotesTable.title] = title
+                it[NotesTable.content] = content
+            }
 
-    fun all(): List<Note> = notes
-
-    fun search(query: String): List<Note> {
-        return notes.filter {
-            it.title.contains(query, ignoreCase = true) ||
-            it.content.contains(query, ignoreCase = true)
+            Note(id = id, title = title, content = content)
         }
-    }
+
+    fun all(): List<Note> =
+        transaction {
+            NotesTable.selectAll().map {
+                Note(
+                    id = it[NotesTable.id],
+                    title = it[NotesTable.title],
+                    content = it[NotesTable.content]
+                )
+            }
+        }
+
+    fun search(query: String): List<Note> =
+        transaction {
+            NotesTable
+                .select {
+                    (NotesTable.title like "%$query%") or
+                    (NotesTable.content like "%$query%")
+                }
+                .map {
+                    Note(
+                        id = it[NotesTable.id],
+                        title = it[NotesTable.title],
+                        content = it[NotesTable.content]
+                    )
+                }
+        }
 }
