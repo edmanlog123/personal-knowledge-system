@@ -6,9 +6,9 @@ import org.example.repository.NoteRepository
 
 class NoteMutation : Mutation {
 
-    private val repo = NoteRepository()
+    
 
     fun addNote(title: String, content: String): Note {
-        return repo.add(title, content)
+        return NoteRepository.add(title, content)
     }
 }

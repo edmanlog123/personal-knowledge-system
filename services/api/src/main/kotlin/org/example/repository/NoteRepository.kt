@@ -3,7 +3,7 @@ package org.example.repository
 import org.example.domain.Note
 import java.util.UUID
 
-class NoteRepository {
+object NoteRepository {
 
     private val notes = mutableListOf<Note>()
 

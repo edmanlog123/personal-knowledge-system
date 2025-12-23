@@ -6,15 +6,15 @@ import org.example.repository.NoteRepository
 
 class RootQuery: Query {
 
-    private val repo = NoteRepository()
+    
 
     fun ping(): String = "pong"
 
     fun allNotes(): List<Note> {
-        return repo.all()
+        return NoteRepository.all()
     }
 
     fun searchNotes(query: String): List<Note> {
-        return repo.search(query)
+        return NoteRepository.search(query)
     }
 }
