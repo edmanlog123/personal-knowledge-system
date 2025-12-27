@@ -1,3 +1,0 @@
-/Users/edwardogbalor/Desktop/coding/personal-knowledge-system/vector-engine/build/CMakeFiles/vector_engine.dir
-/Users/edwardogbalor/Desktop/coding/personal-knowledge-system/vector-engine/build/CMakeFiles/edit_cache.dir
-/Users/edwardogbalor/Desktop/coding/personal-knowledge-system/vector-engine/build/CMakeFiles/rebuild_cache.dir
