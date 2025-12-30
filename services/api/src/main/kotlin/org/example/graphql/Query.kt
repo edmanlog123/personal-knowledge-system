@@ -16,7 +16,23 @@ class RootQuery: Query {
         return NoteRepository.all()
     }
 
-    fun searchNotes(query: String): List<SearchResult> {
-    return NoteRepository.search(query)
+    fun searchNotes(query: String): List<org.example.search.SearchResult> {
+    val lexicalResults = NoteRepository.search(query)
+
+    val vectorClient = org.example.vector.VectorClient()
+    
+    val embeddingClient = org.example.vector.EmbeddingClient()
+    val queryVector = embeddingClient.embed(query)
+
+
+    val semanticResults = vectorClient.search(queryVector).map {
+        org.example.search.SemanticHit(it.id, it.score)
+    }
+
+    return org.example.search.HybridRanker.fuse(
+        lexical = lexicalResults,
+        semantic = semanticResults
+    )
 }
+
 }

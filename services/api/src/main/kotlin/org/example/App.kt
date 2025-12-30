@@ -43,4 +43,22 @@ fun Application.module() {
         graphQLPostRoute()
         graphiQLRoute()
     }
+    val vectorClient = org.example.vector.VectorClient()
+
+// TEMP TEST — remove later
+vectorClient.upsert(
+    id = "test-note",
+    vector = listOf(1.0f, 0.0f, 0.0f)
+)
+
+val results = vectorClient.search(
+    vector = listOf(1.0f, 0.0f, 0.0f),
+    topK = 3
+)
+
+println("Semantic results from C++:")
+results.forEach {
+    println("${it.id} -> ${it.score}")
+}
+
 }
