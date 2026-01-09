@@ -34,5 +34,8 @@ class RootQuery: Query {
         semantic = semanticResults
     )
 }
+    fun noteById(id: String): Note? {
+    return NoteRepository.findById(id)
+}
 
 }

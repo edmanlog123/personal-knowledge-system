@@ -5,7 +5,7 @@ import java.net.URL
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
 class EmbeddingClient(
-    private val baseUrl: String = "http://localhost:8081"
+    private val baseUrl: String = "http://${System.getenv("EMBEDDING_HOST") ?: "localhost"}:${System.getenv("EMBEDDING_PORT") ?: "8081"}"
 ) {
     private val mapper = jacksonObjectMapper()
 

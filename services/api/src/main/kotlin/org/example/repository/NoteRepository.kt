@@ -62,6 +62,19 @@ object NoteRepository {
             .sortedByDescending { it.score }
     }
 }
+fun findById(id: String): Note? =
+    transaction {
+        NotesTable.select { NotesTable.id eq id }
+            .map {
+                Note(
+                    id = it[NotesTable.id],
+                    title = it[NotesTable.title],
+                    content = it[NotesTable.content]
+                )
+            }
+            .firstOrNull()
+    }
+
 
 
 }

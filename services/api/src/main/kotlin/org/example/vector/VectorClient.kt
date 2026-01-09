@@ -11,7 +11,7 @@ data class VectorResult(
 )
 
 class VectorClient(
-    private val baseUrl: String = "http://localhost:9090"
+    private val baseUrl: String = "http://${System.getenv("VECTOR_HOST") ?: "localhost"}:${System.getenv("VECTOR_PORT") ?: "9090"}"
 ) {
     private val mapper = jacksonObjectMapper()
 
